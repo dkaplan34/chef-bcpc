@@ -359,19 +359,6 @@ default['bcpc']['bootstrap']['mirror_path'] = "/ubuntu"
 
 ###########################################
 #
-# Rally settings
-#
-###########################################
-#
-# Package versions
-# None needed at this time
-if node.chef_environment == "Test-Laptop-Vagrant"
-   default['bcpc']['rally']['user'] = 'vagrant'
-else
-   default['bcpc']['rally']['user'] = 'operations'
-end
-###########################################
-#
 # Openstack Flavors
 #
 ###########################################
