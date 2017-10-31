@@ -15,9 +15,8 @@
     mon host = <%= @servers.map{|s| s["bcpc"]["storage"]["ip"] + ":6789"}.join(', ') %>
     mon_pg_warn_max_per_osd = <%= @node['bcpc']['ceph']['max_pgs_per_osd'] %>
     mon pg warn max object skew = <%= @node['bcpc']['ceph']['pg_warn_max_obj_skew'] %>
-<% if @node["bcpc"]["ceph"]["rebalance"] %>
-    paxos_propose_interval = 60
-<% end %>
+    max open files = <%= @node['bcpc']['ceph']['max_open_files'] %>
+    paxos propose interval = <%= @node['bcpc']['ceph']['paxos_propose_interval'] %>
 
 [mon]
     keyring = /var/lib/ceph/mon/$cluster-$id/keyring
@@ -38,14 +37,15 @@
     osd crush update on start = false
     osd client op priority = 63
     osd scrub load threshold = <%= @node['bcpc']['ceph']['osd_scrub_load_threshold'] %>
-<% if @node["bcpc"]["ceph"]["rebalance"] %>
-    osd recovery max active = 1
-    osd max backfills  = 1
-    osd op threads = 10
-    osd recovery op priority = 1
-    osd mon report interval min = 30
-<% end %>
+#Settings to throttle OSD recovery parameters
+    osd mon report interval min = <%= @node['bcpc']['ceph']['osd_mon_report_interval_min'] %>
+    osd recovery max active = <%= @node['bcpc']['ceph']['osd_recovery_max_active'] %>
+    osd recovery threads = <%= @node['bcpc']['ceph']['osd_recovery_threads'] %>
+    osd recovery op priority = <%= @node['bcpc']['ceph']['osd_recovery_op_priority'] %>
+    osd max backfills  = <%= @node['bcpc']['ceph']['osd_max_backfills'] %>
+    osd op threads = <%= @node['bcpc']['ceph']['osd_op_threads'] %>
 
+   
 [client.admin]
     # dont want the admin client creating sockets/logs
     admin socket =

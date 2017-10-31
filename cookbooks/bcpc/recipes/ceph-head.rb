@@ -199,20 +199,6 @@ end
     end
 end
 
-%w{noscrub nodeep-scrub}.each do |flag|
-  if node['bcpc']['ceph']['rebalance']
-    execute "ceph-osd-set-#{flag}" do
-      command "ceph osd set #{flag}"
-      only_if "ceph health"
-    end
-  else
-    execute "ceph-osd-unset-#{flag}" do
-      command "ceph osd unset #{flag}"
-      only_if "ceph health"
-    end
-  end
-end
-
 bash "create-ceph-cinder-user" do
   user "root"
   code "ceph auth get-or-create client.cinder mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=volumes-ssd,allow rwx pool=volumes-hdd, allow rwx pool=vms, allow rx pool=images'"

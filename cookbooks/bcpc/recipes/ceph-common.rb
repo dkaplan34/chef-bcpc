@@ -116,36 +116,6 @@ directory "/var/log/qemu/" do
   mode  "0755"
 end
 
-bcpc_cephconfig 'paxos_propose_interval' do
-  value node["bcpc"]["ceph"]["rebalance"] ? "60" : "1"
-  target "ceph-mon*"
-end
-
-bcpc_cephconfig 'osd_recovery_max_active' do
-  value node["bcpc"]["ceph"]["rebalance"] ? "1" : "15"
-  target "ceph-osd*"
-end
-
-bcpc_cephconfig 'osd_max_backfills' do
-  value node["bcpc"]["ceph"]["rebalance"] ? "1" : "10"
-  target "ceph-osd*"
-end
-
-bcpc_cephconfig 'osd_op_threads' do
-  value node["bcpc"]["ceph"]["rebalance"] ? "10" : "2"
-  target "ceph-osd*"
-end
-
-bcpc_cephconfig 'osd_recovery_op_priority' do
-  value node["bcpc"]["ceph"]["rebalance"] ? "1" : "10"
-  target "ceph-osd*"
-end
-
-bcpc_cephconfig 'osd_mon_report_interval_min' do
-  value node["bcpc"]["ceph"]["rebalance"] ? "30" : "5"
-  target "ceph-osd*"
-end
-
 # Script looks for mdsmap and if MDS is removed later then this script will need to be changed.
 bash "wait-for-pgs-creating" do
     action :nothing

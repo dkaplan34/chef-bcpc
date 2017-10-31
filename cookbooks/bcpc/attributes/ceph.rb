@@ -40,12 +40,6 @@ default['bcpc']['ceph']['vms']['name'] = "vms"
 default['bcpc']['ceph']['ssd']['ruleset'] = 1
 default['bcpc']['ceph']['hdd']['ruleset'] = 2
 
-# If you are about to make a big change to the ceph cluster
-# setting to true will reduce the load form the resulting
-# ceph rebalance and keep things operational.
-# See wiki for further details.
-default['bcpc']['ceph']['rebalance'] = false
-
 # Set the default niceness of Ceph OSD and monitor processes
 default['bcpc']['ceph']['osd_niceness'] = -10
 default['bcpc']['ceph']['mon_niceness'] = -10
@@ -79,3 +73,15 @@ default['bcpc']['ceph']['expected_tunables'] = {
   "has_v3_rules"=>0,
   "has_v4_buckets"=>1
 }
+
+# sets the max open fds at the OS level
+default['bcpc']['ceph']['max_open_files'] = 2048
+
+# set tunables for ceph osd reovery
+default['bcpc']['ceph']['paxos_propose_interval'] = 1
+default['bcpc']['ceph']['osd_recovery_max_active'] = 1
+default['bcpc']['ceph']['osd_recovery_threads'] = 1
+default['bcpc']['ceph']['osd_recovery_op_priority'] = 1
+default['bcpc']['ceph']['osd_max_backfills'] = 1
+default['bcpc']['ceph']['osd_op_threads'] = 2
+default['bcpc']['ceph']['osd_mon_report_interval_min'] = 5
